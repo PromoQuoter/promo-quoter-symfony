@@ -6,11 +6,15 @@ use App\Repository\CustomerRepository;
 use App\Type\YesNo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 class Customer
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -19,37 +23,41 @@ class Customer
     #[ORM\Column(nullable: true)]
     private ?int $parent_id = null;
 
+    #[ORM\Column(name: 'company_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'customers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company_id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $company = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $salutation = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $field_name = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $first_name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $last_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reference = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address1 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address2 = null;
 
+    #[ORM\Column(name: 'country_id', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?Countries $country_id = null;
 
+    #[ORM\Column(name: 'state_id', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?States $state_id = null;
 
+    #[ORM\Column(name: 'city_id', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?Cities $city_id = null;
 
@@ -80,12 +88,15 @@ class Customer
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address21 = null;
 
+    #[ORM\Column(name: 'country_id1', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?Countries $country_id1 = null;
 
+    #[ORM\Column(name: 'state_id1', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?States $state_id1 = null;
 
+    #[ORM\Column(name: 'city_id1', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?Cities $city_id1 = null;
 
@@ -98,7 +109,7 @@ class Customer
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $company_website = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(name: 'xeroKey', length: 255, nullable: true)]
     private ?string $xeroKey = null;
 
     #[ORM\Column(enumType: YesNo::class)]
@@ -110,9 +121,16 @@ class Customer
     #[ORM\OneToMany(targetEntity: CustomerBusinessSource::class, mappedBy: 'customer_id')]
     private Collection $customerBusinessSources;
 
+    /**
+     * @var Collection<int, JobTracking>
+     */
+    #[ORM\OneToMany(targetEntity: JobTracking::class, mappedBy: 'quote_customer')]
+    private Collection $jobs;
+
     public function __construct()
     {
         $this->customerBusinessSources = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -168,14 +186,14 @@ class Customer
         return $this;
     }
 
-    public function getFieldName(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->field_name;
+        return $this->first_name;
     }
 
-    public function setFieldName(string $field_name): static
+    public function setFirstName(string $first_name): static
     {
-        $this->field_name = $field_name;
+        $this->first_name = $first_name;
 
         return $this;
     }
@@ -492,6 +510,36 @@ class Customer
             // set the owning side to null (unless already changed)
             if ($customerBusinessSource->getCustomerId() === $this) {
                 $customerBusinessSource->setCustomerId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, JobTracking>
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJob(JobTracking $job): static
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs->add($job);
+            $job->setQuoteCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJob(JobTracking $job): static
+    {
+        if ($this->jobs->removeElement($job)) {
+            // set the owning side to null (unless already changed)
+            if ($job->getQuoteCustomer() === $this) {
+                $job->setQuoteCustomer(null);
             }
         }
 

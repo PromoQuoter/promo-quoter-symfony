@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\PartXeroKeyRepository;
+use App\Repository\ProductSupplierLinkRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Index(name: 'part_id', columns: ['part_id'])]
-#[ORM\Entity(repositoryClass: PartXeroKeyRepository::class)]
-class PartXeroKey
+#[ORM\Entity(repositoryClass: ProductSupplierLinkRepository::class)]
+class ProductSupplierLink
 {
     #[ORM\Id]
     #[ORM\ManyToOne]
@@ -22,8 +21,10 @@ class PartXeroKey
     #[ORM\Column(name: 'part_id', type: Types::INTEGER)]
     private ?PartDatabase $part_id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $xero_key = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\Column(name: 'supplier_id', type: Types::INTEGER)]
+    private ?Supplier $supplier_id = null;
 
     public function getCompanyId(): ?Company
     {
@@ -49,14 +50,14 @@ class PartXeroKey
         return $this;
     }
 
-    public function getXeroKey(): ?string
+    public function getSupplierId(): ?Supplier
     {
-        return $this->xero_key;
+        return $this->supplier_id;
     }
 
-    public function setXeroKey(string $xero_key): static
+    public function setSupplierId(?Supplier $supplier_id): static
     {
-        $this->xero_key = $xero_key;
+        $this->supplier_id = $supplier_id;
 
         return $this;
     }

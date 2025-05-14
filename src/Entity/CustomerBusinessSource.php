@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CustomerBusinessSourceRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CustomerBusinessSourceRepository::class)]
@@ -13,10 +14,12 @@ class CustomerBusinessSource
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(name: 'customer_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'customerBusinessSources')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Customer $customer_id = null;
 
+    #[ORM\Column(name: 'resource_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'customerBusinessSources')]
     #[ORM\JoinColumn(nullable: false)]
     private ?BusinessSource $resource_id = null;

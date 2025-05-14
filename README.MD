@@ -2,14 +2,16 @@
 
 ## TODO
 
-- [ ] auth tables
-- [ ] invoice
-- [ ] job_tracking
-- [ ] job_tracking_part_artwork
-- [ ] part_xero_key
-- [ ] partsdatabase
-- [ ] product_supplier_link
-- [ ] quote_line_items
-- [ ] quotes (salesperson)
-- [ ] subscriptions
-- [ ] users_to_do
+- [x] auth tables
+- [x] invoice
+- [x] job_tracking
+- [x] job_tracking_part_artwork
+- [x] part_xero_key
+- [x] partsdatabase
+- [x] product_supplier_link
+- [x] quote_line_items
+- [x] quotes (salesperson)
+- [x] subscriptions
+- [x] users_to_do
+
+- [x] https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/timestampable.md

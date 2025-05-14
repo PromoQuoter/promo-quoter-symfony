@@ -15,6 +15,7 @@ class QuoteLayoutSetting
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(name: 'company_id', type: Types::INTEGER)]
     #[ORM\OneToOne(inversedBy: 'quoteLayoutSetting', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company_id = null;

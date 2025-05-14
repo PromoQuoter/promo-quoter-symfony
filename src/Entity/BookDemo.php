@@ -5,10 +5,14 @@ namespace App\Entity;
 use App\Repository\BookDemoRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+#[ORM\Index(name: 'cuid', columns: ['cuid'])]
 #[ORM\Entity(repositoryClass: BookDemoRepository::class)]
 class BookDemo
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,19 +37,13 @@ class BookDemo
     private ?DateTime $date = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $playform = null;
+    private ?string $platform = null;
 
     #[ORM\Column(length: 255)]
     private ?string $platform_username = null;
 
     #[ORM\Column(length: 255)]
     private ?string $notes = null;
-
-    #[ORM\Column]
-    private ?DateTime $created_at = null;
-
-    #[ORM\Column]
-    private ?DateTime $updated_at = null;
 
     public function getId(): ?int
     {
@@ -124,14 +122,14 @@ class BookDemo
         return $this;
     }
 
-    public function getPlayform(): ?string
+    public function getPlatform(): ?string
     {
-        return $this->playform;
+        return $this->playtorm;
     }
 
-    public function setPlayform(string $playform): static
+    public function setPlatform(string $platform): static
     {
-        $this->playform = $playform;
+        $this->platform = $platform;
 
         return $this;
     }
@@ -156,18 +154,6 @@ class BookDemo
     public function setNotes(string $notes): static
     {
         $this->notes = $notes;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?DateTime
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(DateTime $created_at): static
-    {
-        $this->created_at = $created_at;
 
         return $this;
     }

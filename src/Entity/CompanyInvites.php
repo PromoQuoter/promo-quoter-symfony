@@ -3,16 +3,22 @@
 namespace App\Entity;
 
 use App\Repository\CompanyInvitesRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+#[ORM\UniqueConstraint(name: 'email_company_id', columns: ['email', 'company_id'])]
 #[ORM\Entity(repositoryClass: CompanyInvitesRepository::class)]
 class CompanyInvites
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(name: 'company_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'companyInvites')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company_id = null;
@@ -22,12 +28,6 @@ class CompanyInvites
 
     #[ORM\Column(length: 255)]
     private ?string $token = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
-
-    #[ORM\Column]
-    private ?\DateTime $updated_at = null;
 
     public function getId(): ?int
     {
@@ -66,30 +66,6 @@ class CompanyInvites
     public function setToken(string $token): static
     {
         $this->token = $token;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTime $updated_at): static
-    {
-        $this->updated_at = $updated_at;
 
         return $this;
     }

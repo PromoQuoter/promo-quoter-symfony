@@ -4,16 +4,21 @@ namespace App\Entity;
 
 use App\Repository\SupplierRepository;
 use App\Type\YesNo;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: SupplierRepository::class)]
 class Supplier
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(name: 'company_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'suppliers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company_id = null;
@@ -24,7 +29,7 @@ class Supplier
     #[ORM\Column(length: 255)]
     private ?string $contact = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -39,40 +44,45 @@ class Supplier
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address1 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address2 = null;
 
+    #[ORM\Column(name: 'country_id', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?Countries $country_id = null;
 
+    #[ORM\Column(name: 'state_id', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?States $state_id = null;
 
+    #[ORM\Column(name: 'city_id', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?Cities $city_id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $postcode = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $note = null;
 
+    #[ORM\Column(name: 'shipping_type', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?ShippingType $shipping_type = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $trading_terms = null;
 
+    #[ORM\Column(name: 'promodata_id', type: Types::INTEGER, nullable: true)]
     #[ORM\ManyToOne]
     private ?PromoDataSuppliers $promodata_id = null;
 
     #[ORM\Column]
     private ?bool $modified = null;
 
-    #[ORM\Column(enumType: YesNo::class)]
+    #[ORM\Column(name: 'isActivesSupplier', enumType: YesNo::class)]
     private ?YesNo $isActiveSupplier = null;
 
     public function getId(): ?int

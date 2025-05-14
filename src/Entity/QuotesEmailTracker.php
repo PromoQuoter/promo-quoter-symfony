@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\QuotesEmailTrackerRepository;
 use App\Type\YesNo;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,6 +17,7 @@ class QuotesEmailTracker
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(name: 'quotes_id', type: Types::INTEGER)]
     #[ORM\OneToOne(inversedBy: 'quotesEmailTracker', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Quotes $quotes_id = null;
@@ -26,7 +29,7 @@ class QuotesEmailTracker
     private ?string $email_from = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $email_send_date = null;
+    private ?DateTime $email_send_date = null;
 
     #[ORM\Column(length: 255)]
     private ?string $track_code = null;
@@ -34,8 +37,8 @@ class QuotesEmailTracker
     #[ORM\Column(enumType: YesNo::class)]
     private ?YesNo $email_read_status = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTime $email_open_date = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $email_open_date = null;
 
     public function getId(): ?int
     {
@@ -78,12 +81,12 @@ class QuotesEmailTracker
         return $this;
     }
 
-    public function getEmailSendDate(): ?\DateTime
+    public function getEmailSendDate(): ?DateTime
     {
         return $this->email_send_date;
     }
 
-    public function setEmailSendDate(\DateTime $email_send_date): static
+    public function setEmailSendDate(DateTime $email_send_date): static
     {
         $this->email_send_date = $email_send_date;
 
@@ -114,12 +117,12 @@ class QuotesEmailTracker
         return $this;
     }
 
-    public function getEmailOpenDate(): ?\DateTime
+    public function getEmailOpenDate(): ?DateTime
     {
         return $this->email_open_date;
     }
 
-    public function setEmailOpenDate(?\DateTime $email_open_date): static
+    public function setEmailOpenDate(?DateTime $email_open_date): static
     {
         $this->email_open_date = $email_open_date;
 

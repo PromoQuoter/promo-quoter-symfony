@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Table(name: 'pq_countries')]
 #[ORM\Entity(repositoryClass: CountriesRepository::class)]
 class Countries
 {

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\NewsletterRepository;
 use App\Type\YesNoShort;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,11 +25,11 @@ class Newsletter
     #[ORM\Column(enumType: YesNoShort::class)]
     private ?YesNoShort $is_active = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $entry_date = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?DateTimeImmutable $entry_date = null;
 
-    #[ORM\Column]
-    private ?\DateTime $modified_date = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTimeImmutable $modified_date = null;
 
     public function getId(): ?int
     {

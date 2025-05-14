@@ -16,6 +16,21 @@ class AssignSalesmanRepository extends ServiceEntityRepository
         parent::__construct($registry, AssignSalesman::class);
     }
 
+    function _get_business_source($limit, $start, $st = null) {
+        $builder = $this->createQueryBuilder('bs')
+            ->andWhere('bs.company_id = :company_id')
+            ->setParameter('company_id', auth()->user()->company_id)
+            ->orderBy('bs.name', 'asc');
+
+        if ($st) {
+            $builder->andWhere('name LIKE :name', $st)
+                ->setParameter('name', "%$st%");
+        }
+
+        $builder->setMaxResults($limit)->setFirstResult($start);
+        return $builder->getQuery()->getArrayResult();
+    }
+
     //    /**
     //     * @return AssignSalesman[] Returns an array of AssignSalesman objects
     //     */

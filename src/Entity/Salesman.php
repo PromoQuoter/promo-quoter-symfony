@@ -3,16 +3,23 @@
 namespace App\Entity;
 
 use App\Repository\SalesmanRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: SalesmanRepository::class)]
 class Salesman
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(name: 'company_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'salesmen')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company_id = null;
@@ -67,6 +74,17 @@ class Salesman
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email_id = null;
+
+    /**
+     * @var Collection<int, Quotes>
+     */
+    #[ORM\OneToMany(targetEntity: Quotes::class, mappedBy: 'salesperson')]
+    private Collection $quotes;
+
+    public function __construct()
+    {
+        $this->quotes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -285,6 +303,36 @@ class Salesman
     public function setEmailId(?string $email_id): static
     {
         $this->email_id = $email_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quotes>
+     */
+    public function getQuotes(): Collection
+    {
+        return $this->quotes;
+    }
+
+    public function addQuote(Quotes $quote): static
+    {
+        if (!$this->quotes->contains($quote)) {
+            $this->quotes->add($quote);
+            $quote->setSalesperson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuote(Quotes $quote): static
+    {
+        if ($this->quotes->removeElement($quote)) {
+            // set the owning side to null (unless already changed)
+            if ($quote->getSalesperson() === $this) {
+                $quote->setSalesperson(null);
+            }
+        }
 
         return $this;
     }

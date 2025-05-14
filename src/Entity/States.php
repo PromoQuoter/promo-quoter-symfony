@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\StatesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StatesRepository::class)]
@@ -21,6 +22,7 @@ class States
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
+    #[ORM\Column(name: 'country_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'states')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Countries $country_id = null;

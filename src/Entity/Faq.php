@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\FaqRepository;
 use App\Type\YesNoShort;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,7 +20,7 @@ class Faq
     #[ORM\Column(length: 255)]
     private ?string $question = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $answer = null;
 
     #[ORM\Column(enumType: YesNoShort::class)]
@@ -27,11 +29,11 @@ class Faq
     #[ORM\Column(enumType: YesNoShort::class)]
     private ?YesNoShort $is_active = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $entry_date = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?DateTimeImmutable $entry_date = null;
 
-    #[ORM\Column]
-    private ?\DateTime $modified_date = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?DateTimeImmutable $modified_date = null;
 
     public function getId(): ?int
     {
@@ -86,24 +88,24 @@ class Faq
         return $this;
     }
 
-    public function getEntryDate(): ?\DateTime
+    public function getEntryDate(): ?DateTimeImmutable
     {
         return $this->entry_date;
     }
 
-    public function setEntryDate(\DateTime $entry_date): static
+    public function setEntryDate(DateTimeImmutable $entry_date): static
     {
         $this->entry_date = $entry_date;
 
         return $this;
     }
 
-    public function getModifiedDate(): ?\DateTime
+    public function getModifiedDate(): ?DateTimeImmutable
     {
         return $this->modified_date;
     }
 
-    public function setModifiedDate(\DateTime $modified_date): static
+    public function setModifiedDate(DateTimeImmutable $modified_date): static
     {
         $this->modified_date = $modified_date;
 

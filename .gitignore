@@ -27,3 +27,7 @@
 ###> ide ###
 .idea
 ###< ide ###
+
+###> local dev ###
+docker/db
+###< local dev ###

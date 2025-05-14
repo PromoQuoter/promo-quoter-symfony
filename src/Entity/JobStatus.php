@@ -4,16 +4,21 @@ namespace App\Entity;
 
 use App\Repository\JobStatusRepository;
 use App\Type\YesNo;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: JobStatusRepository::class)]
 class JobStatus
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(name: 'company_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'jobStatuses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company_id = null;

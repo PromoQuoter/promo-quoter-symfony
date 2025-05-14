@@ -3,13 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\CompanyRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
 class Company
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -39,12 +44,15 @@ class Company
     #[ORM\Column(length: 255)]
     private ?string $address2 = null;
 
+    #[ORM\Column(name: 'country', type: Types::INTEGER)]
     #[ORM\ManyToOne]
     private ?Countries $country = null;
 
+    #[ORM\Column(name: 'state', type: Types::INTEGER)]
     #[ORM\ManyToOne]
     private ?States $state = null;
 
+    #[ORM\Column(name: 'city', type: Types::INTEGER)]
     #[ORM\ManyToOne]
     private ?Cities $city = null;
 
@@ -60,7 +68,7 @@ class Company
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $xero_purchase_account_code = null;
 
-    #[ORM\Column(type: 'longtext', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?array $additional_addresses = null;
 
     /**
@@ -102,12 +110,6 @@ class Company
     #[ORM\OneToMany(targetEntity: PartCategory::class, mappedBy: 'company_id')]
     private Collection $partCategories;
 
-    /**
-     * @var Collection<int, PartXeroKey>
-     */
-    #[ORM\OneToMany(targetEntity: PartXeroKey::class, mappedBy: 'company_id')]
-    private Collection $partXeroKeys;
-
     #[ORM\OneToOne(mappedBy: 'company_id', cascade: ['persist', 'remove'])]
     private ?QuoteLayoutSetting $quoteLayoutSetting = null;
 
@@ -141,6 +143,36 @@ class Company
     #[ORM\OneToMany(targetEntity: Supplier::class, mappedBy: 'company_id')]
     private Collection $suppliers;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'company_id')]
+    private Collection $users;
+
+    /**
+     * @var Collection<int, Subscriptions>
+     */
+    #[ORM\OneToMany(targetEntity: Subscriptions::class, mappedBy: 'company_id')]
+    private Collection $subscriptions;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $account_type = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $start_date = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $end_date = null;
+
+    #[ORM\Column]
+    private ?int $company_plan_id = null;
+
+    #[ORM\Column]
+    private ?int $total_sub_user_allotment = null;
+
+    #[ORM\Column]
+    private ?int $total_sub_user_allotment_with_plan = null;
+
     public function __construct()
     {
         $this->businessSources = new ArrayCollection();
@@ -149,12 +181,13 @@ class Company
         $this->jobStatuses = new ArrayCollection();
         $this->jobTrackings = new ArrayCollection();
         $this->partCategories = new ArrayCollection();
-        $this->partXeroKeys = new ArrayCollection();
         $this->quoteStatuses = new ArrayCollection();
         $this->quotes = new ArrayCollection();
         $this->salesmen = new ArrayCollection();
         $this->shippingTypes = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -551,36 +584,6 @@ class Company
         return $this;
     }
 
-    /**
-     * @return Collection<int, PartXeroKey>
-     */
-    public function getPartXeroKeys(): Collection
-    {
-        return $this->partXeroKeys;
-    }
-
-    public function addPartXeroKey(PartXeroKey $partXeroKey): static
-    {
-        if (!$this->partXeroKeys->contains($partXeroKey)) {
-            $this->partXeroKeys->add($partXeroKey);
-            $partXeroKey->setCompanyId($this);
-        }
-
-        return $this;
-    }
-
-    public function removePartXeroKey(PartXeroKey $partXeroKey): static
-    {
-        if ($this->partXeroKeys->removeElement($partXeroKey)) {
-            // set the owning side to null (unless already changed)
-            if ($partXeroKey->getCompanyId() === $this) {
-                $partXeroKey->setCompanyId(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getQuoteLayoutSetting(): ?QuoteLayoutSetting
     {
         return $this->quoteLayoutSetting;
@@ -744,6 +747,138 @@ class Company
                 $supplier->setCompanyId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setCompanyId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getCompanyId() === $this) {
+                $user->setCompanyId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Subscriptions>
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
+
+    public function addSubscription(Subscriptions $subscription): static
+    {
+        if (!$this->subscriptions->contains($subscription)) {
+            $this->subscriptions->add($subscription);
+            $subscription->setCompanyId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscriptions $subscription): static
+    {
+        if ($this->subscriptions->removeElement($subscription)) {
+            // set the owning side to null (unless already changed)
+            if ($subscription->getCompanyId() === $this) {
+                $subscription->setCompanyId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAccountType(): ?string
+    {
+        return $this->account_type;
+    }
+
+    public function setAccountType(?string $account_type): static
+    {
+        $this->account_type = $account_type;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?DateTimeImmutable
+    {
+        return $this->start_date;
+    }
+
+    public function setStartDate(?DateTimeImmutable $start_date): static
+    {
+        $this->start_date = $start_date;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?DateTimeImmutable
+    {
+        return $this->end_date;
+    }
+
+    public function setEndDate(?DateTimeImmutable $end_date): static
+    {
+        $this->end_date = $end_date;
+
+        return $this;
+    }
+
+    public function getCompanyPlanId(): ?int
+    {
+        return $this->company_plan_id;
+    }
+
+    public function setCompanyPlanId(int $company_plan_id): static
+    {
+        $this->company_plan_id = $company_plan_id;
+
+        return $this;
+    }
+
+    public function getTotalSubUserAllotment(): ?int
+    {
+        return $this->total_sub_user_allotment;
+    }
+
+    public function setTotalSubUserAllotment(int $total_sub_user_allotment): static
+    {
+        $this->total_sub_user_allotment = $total_sub_user_allotment;
+
+        return $this;
+    }
+
+    public function getTotalSubUserAllotmentWithPlan(): ?int
+    {
+        return $this->total_sub_user_allotment_with_plan;
+    }
+
+    public function setTotalSubUserAllotmentWithPlan(int $total_sub_user_allotment_with_plan): static
+    {
+        $this->total_sub_user_allotment_with_plan = $total_sub_user_allotment_with_plan;
 
         return $this;
     }

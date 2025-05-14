@@ -5,15 +5,19 @@ namespace App\Entity;
 use App\Repository\ShippingTypeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: ShippingTypeRepository::class)]
 class ShippingType
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(name: 'company_id', type: Types::INTEGER)]
     #[ORM\ManyToOne(inversedBy: 'shippingTypes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company_id = null;
