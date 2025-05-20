@@ -16,6 +16,19 @@ class FaqRepository extends ServiceEntityRepository
         parent::__construct($registry, Faq::class);
     }
 
+    /**
+     * @return Faq[] Returns an array of FAQ objects
+     */
+    public function findActive(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.is_active = FALSE')
+            ->andWhere('c.delete_flag = FALSE')
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Faq[] Returns an array of Faq objects
     //     */

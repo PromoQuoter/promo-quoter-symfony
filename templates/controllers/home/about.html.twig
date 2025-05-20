@@ -1,0 +1,79 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="inr-ban">
+    <img class="img-fluid" src="{{ asset('assets/home/images/inr-ban.jpg') }}" alt=""/>
+    <h2 class="page-title">About Us</h2>
+</div>
+
+<div class="clearfix"></div>
+
+<section class="main-sec" id="what">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="abt-img">
+                    <img class="img-fluid"
+                         src="{{ asset('media/home/about.png') }}"
+                         alt=""/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="abt-txt">
+                    <h2>
+                        <span>About</span>
+                        Promo Quoter
+                    </h2>
+                    <p>
+                        Promo Quoter is an intuitive, easy to use quotation program primarily designed for the
+                        Promotional Products Industry.
+
+                        Create customised quotes that can incorporate up to six different price points and allows you to
+                        build in decoration components to your primary product without listing them as a separate line
+                        item.
+
+                        The Job Tracking module has been designed, so you can see every stage of your production process
+                        to ensure you don’t miss an important deadline. You can customise individual progress categories
+                        that suit your business. With the Xero integration you can create an invoice directly from the
+                        quote with the touch of a button. Saves time with no double handling.
+
+                        Create purchase orders instantly in Xero straight from the Job Tracking section. The powerful
+                        parts database allows you to upload a suppliers entire product range and images in just minutes
+                        using a CSV spreadsheet that meets APPA data requirements.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="abt-txt">
+                    <h2>Features:</h2>
+                    <ul>
+                        <li>CONNECTED TO PROMODATA WITH LIVE PRICING FOR OVER 44,000 PRODUCTS</li>
+                        <li>POWERFUL PRODUCTS DATABASE WITH DETAILED SEARCH FUNCTIONALITY</li>
+                        <li>DETAILED SUPPLIER DATABASE</li>
+                        <li>CUSTOMER CRM</li>
+                        <li>UP TO SIX PRICE BREAKS PER PRODUCT ITEM</li>
+                        <li>CONVERT QUOTES INTO JOBS AND TRACK PRODUCTION</li>
+                        <li>ASSIGN STAFF TO VARIOUS TASKS</li>
+                        <li>INDIVIDUAL USER SECURITY OPTIONS</li>
+                        <li>COMPLETE DAILY BACKUP AND SECURITY FOR YOU COMPANY'S DATA</li>
+                        <li>MONTHLY SUBSCRIPTION. CANCEL ANYTIME.</li>
+                        <li>LIVE SUPPLIER PRODUCT DATA THAT IS ALWAYS UP-TO-DATE PRICING BY USING APIS</li>
+                        <li>LINK DIRECTLY TO XERO FOR PURCHASES AND INVOICES. (REQUIRES SEPARATE SUBSCRIPTION)</li>
+                        <li>TRACK SALES STAFF ACTIVITY</li>
+                        <li>EMAIL NOTIFICATION WHEN CUSTOMER OPENS YOUR QUOTE</li>
+                        <li>AUSTRALIAN BASED SERVERS WITH MULTI-LAYERED SECURITY.</li>
+                        <li>DEVICE RESPONSIVE PROGRAM ALLOWS YOU TO WORK ANYWHERE IN THE WORLD FROM A DESKTOP, LAPTOP,
+                            TABLET OR MOBILE PHONE.
+                        </li>
+                        <li>14 DAY FREE TRIAL WITH SUPPORT IF REQUIRED. CANCEL ANYTIME.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

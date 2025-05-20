@@ -1,0 +1,40 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Free Trial{% endblock %}
+
+{% block content %}
+<div class="inr-ban">
+    <img class="img-fluid" src="{{ asset('assets/home/images/inr-ban.jpg') }}" alt=""/>
+    <h2 class="page-title">Free Trial</h2>
+</div>
+
+<div class="clearfix"></div>
+
+<section class="main-sec" id="what">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="abt-img">
+                    <img class="img-fluid"
+                         src="{{ asset('media/home/free-trial.jpg') }}"
+                         alt=""/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="abt-txt">
+                    <h2>Free Trial</h2>
+                    <p>We offer a free 14 day, no obligation, free trial that offers you full use of the Promo Quoter
+                        application excluding the Xero Integration. Start with a blank canvas and customise your database
+                        to suit your own requirements. We are happy to assist you throughout this process as we want you
+                        to experience the full potential of Promo Quoter. We will initially require your credit card
+                        details, and you will only be billed if you choose to continue beyond the 14-day trial. We will
+                        send you a reminder before the trial expires. What are you waiting for! Get started now.</p>
+
+                    {# TODO: Replace with route #}
+                    <a href="/free-sign-up">Register for a Free Trial</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

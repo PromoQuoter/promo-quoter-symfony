@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/standalone.css') }}">
+{% endblock %}
+
+{% block body_class %}d-flex flex-column min-vh-100{% endblock %}
+
+{% block header %}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container">
+                {# Logo #}
+                <a class="navbar-brand" href="{{ path('app_home') }}">
+                    <img src="{{ asset('assets/images/logos/logo-animated.gif') }}" alt="PromoQuoter" height="48">
+                </a>
+            </div>
+        </nav>
+    </header>
+{% endblock %}
+
+{% block body %}
+    <main class="flex-grow-1">
+        <div class="container py-4">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+{% endblock %}
+
+{% block footer %}
+    <footer class="bg-dark py-3">
+        <div class="container">
+            <p class="text-center text-white mb-0">
+                &copy; {{ "now"|date("Y") }} PromoQuoter. All rights reserved.
+            </p>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/standalone.js') }}"></script>
+{% endblock %} 

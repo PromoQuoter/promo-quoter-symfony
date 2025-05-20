@@ -1,17 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        {# Required meta tags #}
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="{% block meta_description %}PromoQuoter - Promotional Products Quoting Software{% endblock %}">
+        
+        {# Favicons #}
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/icon/apple-icon-57x57.png') }}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/icon/apple-icon-60x60.png') }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/icon/apple-icon-72x72.png') }}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/icon/apple-icon-76x76.png') }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/icon/apple-icon-114x114.png') }}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/icon/apple-icon-120x120.png') }}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/icon/apple-icon-144x144.png') }}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/icon/apple-icon-152x152.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/icon/apple-icon-180x180.png') }}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/icon/android-icon-192x192.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/icon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/icon/favicon-96x96.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/icon/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ asset('assets/icon/manifest.json') }}">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="{{ asset('assets/icon/ms-icon-144x144.png') }}">
+        <meta name="theme-color" content="#ffffff">
+        
+        <title>{% block title %}Welcome{% endblock %} | PromoQuoter</title>
+
+        {# Font Awesome #}
+        <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/fontawesome.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/brands.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/solid.css') }}">
+
+        {# Google Fonts #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,800,900" rel="stylesheet">
+
+        {# Third Party CSS #}
+        <link rel="stylesheet" href="{{ asset('assets/css/third_party/owl.carousel@2.2.0.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/third_party/owl.theme.default@2.2.0.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/third_party/magnific-popup@1.1.0.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/third_party/sweetalert.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
+        
+        {# Base CSS #}
+        <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}">
+        
+        {# Additional Styles #}
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+        {# Header #}
+        {% block header %}{% endblock %}
+
+        {# Main Content #}
+        {% block body %}{% endblock %}
+
+        {# Footer #}
+        {% block footer %}
+            <footer class="bg-dark mt-auto">
+                <div class="container">
+                    <div class="pt-5 pb-3 border-bottom border-1 border-secondary">
+                        <div class="row g-2">
+                            {# Logo #}
+                            <div class="col-md-4">
+                                <div class="d-flex flex-row gap-2 align-items-center mb-2">
+                                    <div class="bg-white rounded-2 overflow-hidden">
+                                        <img class="p-1" src="{{ asset('assets/images/logos/icon.svg') }}" alt="" width="32" height="32"/>
+                                    </div>
+                                    <h5 class="text-promo fw-bold m-0">Promo Quoter</h5>
+                                </div>
+                                <p class="mb-0 text-secondary">
+                                    Subscriptions are billed directly via Credit Card or Direct Deposit.
+                                    A Tax Invoice is emailed every month. Cancel anytime. No lock in contracts.
+                                </p>
+                            </div>
+
+                            {# Links #}
+                            <div class="col-md-4">
+                                <h5 class="text-promo fw-bold mb-2">Links</h5>
+                                <ul class="list-unstyled">
+                                    {# TODO: Add these back #}
+                                    <li><a class="text-decoration-none link-secondary" href="{{ path('app_home') }}">Home</a></li>
+                                    <li><a class="text-decoration-none link-secondary" href="{{ path('app_about') }}">About</a></li>
+                                    <li><a class="text-decoration-none link-secondary" href="{{ path('app_screenshots') }}">Screenshots</a></li>
+                                    <li><a class="text-decoration-none link-secondary" href="{{ path('app_pricing') }}">Pricing</a></li>
+{#                                    <li><a class="text-decoration-none link-secondary" href="{{ path('app_book_demo') }}">Book Demo</a></li>#}
+                                    <li><a class="text-decoration-none link-secondary" href="{{ path('app_contact_us') }}">Contact Us</a></li>
+                                </ul>
+                            </div>
+
+                            {# Contact #}
+                            <div class="col-md-4">
+                                <h5 class="text-promo fw-bold mb-2">Need Support?</h5>
+                                <p class="text-secondary mb-2">We are here to help. Please contact us if you have any questions.</p>
+
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <i class="text-promo fa fa-fw fa-envelope"></i>
+                                        <a class="text-decoration-none link-secondary" href="mailto:info@promoquoter.com">info@promoquoter.com</a>
+                                    </li>
+                                    <li>
+                                        <i class="text-promo fa fa-fw fa-phone"></i>
+                                        <a class="text-decoration-none link-secondary" href="tel:+61 418 964 664">+61 418 964 664</a>
+                                    </li>
+                                    <li>
+                                        <i class="text-promo fa fa-fw fa-gavel"></i>
+                                        <a class="text-decoration-none link-secondary" href="{{ path('app_terms') }}">Terms and Conditions</a>
+                                    </li>
+                                    <li>
+                                        <i class="text-promo fa fa-fw fa-lock"></i>
+                                        <a class="text-decoration-none link-secondary" href="{{ path('app_privacy') }}">Privacy Policy</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Copyright #}
+                    <p class="text-secondary py-3 m-0">
+                        &copy; {{ "now"|date("Y") }} All Rights Reserved | Senacruise Solutions Pty Ltd | ABN 50 134 334 866
+                    </p>
+                </div>
+            </footer>
         {% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
+        {# jQuery and Core Libraries #}
+        <script src="{{ asset('assets/js/third_party/jquery@3.6.3.min.js') }}"></script>
+        <script src="{{ asset('assets/js/third_party/jquery.magnific-popup@1.1.0.min.js') }}"></script>
+        <script src="{{ asset('assets/js/third_party/jquery.validate@1.19.5.min.js') }}"></script>
+        <script src="{{ asset('assets/js/third_party/jquery.redirect@1.2.0.js') }}"></script>
+        <script src="{{ asset('assets/js/third_party/jquery.easing@1.4.1.min.js') }}"></script>
+        
+        {# Third Party Scripts #}
+        <script src="{{ asset('assets/js/third_party/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/js/third_party/popper-2.11.8.min.js') }}"></script>
+        <script src="{{ asset('assets/js/third_party/owl.carousel@2.2.0.min.js') }}"></script>
+        <script src="{{ asset('assets/js/third_party/sweetalert2@11.js') }}"></script>
+        
+        {# Common Scripts #}
+        <script>
+            // SWAL - Initialization
+            window.Popup = Swal.mixin({
+                // Bootstrap 5
+                customClass: {
+                    confirmButton: 'btn btn-success btn-lg',
+                    cancelButton: 'btn btn-danger btn-lg'
+                },
+                buttonsStyling: false,
+
+                // Timers
+                timer: 3000,
+                timerProgressBar: true,
+            });
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    window.Popup.fire(
+                        "{{ label|title }}!",
+                        "{{ message|escape('js') }}",
+                        "{{ label == 'success' ? 'success' : 'error' }}"
+                    );
+                {% endfor %}
+            {% endfor %}
+        </script>
+        
+        {# Additional Scripts #}
+        {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -1,0 +1,113 @@
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<section class="main-sec" id="what">
+    <div id="pageloader" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+        <img src="{{ asset('assets/loader-large.gif') }}" alt="processing..." />
+    </div>
+
+    <div class="container">
+        <h2 class="main-title">DROP US A MESSAGE</h2>
+        <p class="plan-pera">Send a quick email with any questions you might have, and we'll get back to you quicker
+            than Jack Flash.</p>
+        <div class="row mt-5">
+            <div class="offset-md-1 col-md-10">
+                <form action="/contact-us" class="rd-mailform" method="post" id="DropMsgForm">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Name *" name="name">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <input class="form-control" type="email" placeholder="Email *" name="email">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <input class="form-control" type="tel" placeholder="Phone No. *" name="phone">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Subject *" name="subject">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Message *" name="msg"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3" style="display: flex; justify-content: center;">
+                            <div class="g-recaptcha" data-sitekey="6LcR4HwpAAAAACiB5BGzciqL5RvRCWRgT6OUGYK-"
+                                 data-required="true"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn2" type="submit">Send message</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('DropMsgForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        $("#pageloader").fadeIn();
+
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse) {
+            grecaptcha.reset();
+            $("#pageloader").fadeOut();
+            window.Popup.fire({
+                title: 'Error',
+                text: 'Please verify that you are not a robot!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        try {
+            const formData = new FormData(e.target);
+            formData.append('g-recaptcha-response', recaptchaResponse);
+
+            const response = await fetch('{{ path('app_drop_message') }}', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                window.Popup.fire({
+                    title: 'Thank you!',
+                    text: 'Your message has been sent successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    e.target.reset(); // Reset the form
+                    grecaptcha.reset(); // Reset reCAPTCHA
+                });
+            } else {
+                window.Popup.fire({
+                    title: 'Error',
+                    text: data.message || 'Something went wrong!',
+                    icon: 'error',
+                    confirmButtonText: 'Try Again'
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            window.Popup.fire({
+                title: 'Unexpected Error',
+                text: 'Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        } finally {
+            $("#pageloader").fadeOut(); // Always hide the loader
+        }
+    });
+</script>

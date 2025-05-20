@@ -16,6 +16,20 @@ class ClientsFeedbackRepository extends ServiceEntityRepository
         parent::__construct($registry, ClientsFeedback::class);
     }
 
+    /**
+     * @return ClientsFeedback[] Returns an array of ClientsFeedback objects
+     */
+    public function findActive(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.is_active = FALSE')
+            ->andWhere('c.delete_flag = FALSE')
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     //    /**
     //     * @return ClientsFeedback[] Returns an array of ClientsFeedback objects
     //     */

@@ -1,0 +1,156 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {# Banner #}
+    {# TODO: Proper button paths #}
+    {% set banners = [
+        {
+            "image": "2.jpg",
+            "title": "QUOTING SOFTWARE MADE SIMPLE.",
+            "description": "Quotation & Job Tracking Application for the Promotional Products Industry.",
+            "button_text": "START YOUR FREE TRIAL NOW",
+            "button_page": '/register'
+        },
+        {
+            "image": "3.jpg",
+            "title": "14 DAY FREE TRIAL",
+            "description": "No Lock in Contracts. Cancel Anytime",
+            "button_text": "START YOUR FREE TRIAL NOW",
+            "button_page": '/register'
+        },
+        {
+            "image": "1.jpg",
+            "title": "QUOTE MORE, SELL MORE",
+            "description": "Create customised quotes in minutes. Fast, accurate, easy. Subscription based. Cancel Anytime.",
+            "button_text": "BOOK ONLINE DEMONSTRATION",
+            "button_page": '/book-demo'
+        }
+    ] %}
+
+    <div id="banner" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for banner in banners %}
+                <button type="button" 
+                        data-bs-target="#banner" 
+                        data-bs-slide-to="{{ loop.index0 }}"
+                        class="bg-secondary {{ loop.first ? 'active' }}"
+                        aria-current="{{ loop.first ? 'true' : 'false' }}"
+                        aria-label="Slide {{ loop.index }}">
+                </button>
+            {% endfor %}
+        </div>
+
+        <div class="carousel-inner">
+            {% for banner in banners %}
+                <div class="ratio position-relative carousel-item {{ loop.first ? 'active' }}"
+                     style="--bs-aspect-ratio: 47%;">
+                    <img src="{{ asset('media/home/banners/' ~ banner.image) }}" 
+                         class="d-block w-100 h-100"
+                         style="object-fit: cover;"
+                         alt="Carousel Image">
+
+                    <div class="position-absolute top-0 left-0 right-0 bottom-0 d-flex">
+                        <div class="container my-auto text-start">
+                            <div style="width: 40%">
+                                <h1 class="fw-bolder">{{ banner.title }}</h1>
+                                <p>{{ banner.description }}</p>
+                                <a class="btn btn-promo mt-2"
+                                   href="{{ banner.button_page }}">{{ banner.button_text }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    {# About #}
+    <section class="px-5 py-8" id="about">
+        <div class="row g-5">
+            <div class="col-md-6">
+                {# Mobile #}
+                <div class="d-block d-md-none">
+                    <img class="img-fluid" src="{{ asset('assets/home/images/Build_a_Quote.png') }}" alt=""/>
+                </div>
+
+                {# Desktop #}
+                <div class="d-none d-md-block h-100"
+                     style="background: url('{{ asset('assets/home/images/Build_a_Quote.png') }}') no-repeat left center; background-size: cover;">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h1 class="fw-bold">PROMO QUOTER</h1>
+                <p>
+                    Quoting Software designed specifically for the Promotional Products Industry. Save time and
+                    money with simple, effective applications that track your progress, from the start of a quote, to
+                    the invoice and delivery of goods to your customer.
+                </p>
+
+                <ul class="list-unstyled">
+                    <li><i class="text-secondary fa fa-fw fa-hourglass"></i> Create customised quotes quickly and
+                        accurately.
+                    </li>
+                    <li><i class="text-secondary fa fa-fw fa-shield"></i> Ensure daily backup and security for your
+                        company's data.
+                    </li>
+                    <li><i class="text-secondary fa fa-fw fa-code"></i> Benefit from full API integration with Xero
+                        Accounting (Xero subscription required separately).
+                    </li>
+                    <li><i class="text-secondary fa fa-fw fa-search"></i> Access a powerful products database with detailed
+                        search facility to find the right product quickly.
+                    </li>
+                    <li><i class="text-secondary fa fa-fw fa-chart-simple"></i> Track your profit and adjust margins with
+                        our "Quote Summary at a Glance" feature.
+                    </li>
+                    <li><i class="text-secondary fa fa-fw fa-cloud"></i> Store all your data securely in the cloud and log
+                        in from anywhere.
+                    </li>
+                    <li><i class="text-secondary fa fa-fw fa-bolt"></i> Enjoy lightning-fast Australian-based hosting with
+                        daily backups.
+                    </li>
+                </ul>
+
+                <a class="btn btn-promo btn-lg mt-2" href="{{ path('app_about') }}">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    {# Plan Pricing #}
+    {{ include('components/home/plan_pricing.html.twig') }}
+
+    {# Book Demo #}
+    <section class="px-5 py-8" id="book-demo">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="fw-bold">BOOK AN ONLINE DEMO</h1>
+                <p>
+                    To schedule an online presentation via Skype or Zoom, please select a suitable date and time that
+                    accommodates approximately 45 minutes to 1 hour for the session. Please ensure that you have allocated
+                    sufficient time for the presentation to run smoothly. Also, kindly indicate your preferred viewing
+                    option when booking.
+                </p>
+                <p>
+                    The "Book Now" button displays the available session times. We suggest selecting a suitable time from
+                    the available session times on the calendar to avoid any scheduling conflicts.
+                </p>
+
+                {# TODO: Add this back #}
+{#                <a class="btn btn-promo btn-lg mt-2" href="{{ path('app_book_demo') }}">Book Now</a>#}
+            </div>
+            <div class="col-md-6">
+                <div class="text-center">
+                    <img class="img-fluid d-inline-block"
+                         src="{{ asset('media/home/book-demo.png') }}"
+                         alt=""/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Contact Form - Commented out in original #}
+    {# {{ include('home/_partials/contact_form.html.twig') }} #}
+{% endblock %}

@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/third_party/jquery.mCustomScrollbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/third_party/dcalendar.picker.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+{% endblock %}
+
+{% block body_class %}hold-transition sidebar-mini layout-fixed{% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+        {# Navbar #}
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            {# Left navbar links #}
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+
+            {# Right navbar links #}
+            <ul class="navbar-nav ml-auto">
+                {# User Menu #}
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-user"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="{{ path('app_profile') }}" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ path('app_logout') }}" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        {# Main Sidebar Container #}
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            {# Brand Logo #}
+            <a href="{{ path('app_dashboard') }}" class="brand-link">
+                <img src="{{ asset('assets/images/logos/icon.svg') }}" alt="PromoQuoter Logo" class="brand-image img-circle elevation-3">
+                <span class="brand-text font-weight-light">PromoQuoter</span>
+            </a>
+
+            {# Sidebar #}
+            <div class="sidebar">
+                {# Sidebar Menu #}
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                        {% set menu = {
+                            'dashboard': {
+                                'title': 'Dashboard',
+                                'icon': 'fa-dashboard',
+                                'path': 'app_dashboard_overview'
+                            },
+                            'quotes': {
+                                'title': 'Quotes',
+                                'icon': 'fa-file-text',
+                                'children': {
+                                    'quotes': {'title': 'Quotes', 'path': 'app_quotes_list'},
+                                    'add_quote': {'title': 'Add Quote', 'path': 'app_quotes_add'}
+                                }
+                            },
+                            'jobs': {
+                                'title': 'Jobs',
+                                'icon': 'fa-tasks',
+                                'path': 'app_job_tracking'
+                            },
+                            'customers': {
+                                'title': 'Customers',
+                                'icon': 'fa-users',
+                                'children': {
+                                    'customers': {'title': 'Customers', 'path': 'app_customers'},
+                                    'add_customer': {'title': 'Add Customer', 'path': 'app_customers_add'}
+                                }
+                            },
+                            'suppliers': {
+                                'title': 'Suppliers',
+                                'icon': 'fa-truck',
+                                'children': {
+                                    'suppliers': {'title': 'Suppliers', 'path': 'app_suppliers'},
+                                    'add_supplier': {'title': 'Add Supplier', 'path': 'app_suppliers_add'}
+                                }
+                            },
+                            'parts': {
+                                'title': 'Parts',
+                                'icon': 'fa-cubes',
+                                'children': {
+                                    'parts': {'title': 'Part Database', 'path': 'app_parts'},
+                                    'add_part': {'title': 'Add Part', 'path': 'app_parts_add'},
+                                    'categories': {'title': 'Categories', 'path': 'app_categories'},
+                                    'sub_categories': {'title': 'Sub Categories', 'path': 'app_subcategories'}
+                                }
+                            },
+                            'settings': {
+                                'title': 'Settings',
+                                'icon': 'fa-cog',
+                                'children': {
+                                    'company': {'title': 'Company', 'path': 'app_company'},
+                                    'users': {'title': 'Users', 'path': 'app_admin_users'},
+                                    'quote_layout': {'title': 'Quote Layout', 'path': 'app_quote_layout'},
+                                    'quote_statuses': {'title': 'Statuses - Quotes', 'path': 'app_quote_status'},
+                                    'job_statuses': {'title': 'Statuses - Jobs', 'path': 'app_job_status_edit'},
+                                    'salespeople': {'title': 'Salespeople', 'path': 'app_salesman'},
+                                    'shipping': {'title': 'Shipping', 'path': 'app_shipping'},
+                                    'business_sources': {'title': 'Business Sources', 'path': 'app_business'},
+                                    'quote_email': {'title': 'Quote Email', 'path': 'app_email_setup'},
+                                    'artwork_email': {'title': 'Artwork Email - Outgoing', 'path': 'app_email_setup_artwork'},
+                                    'artwork_email_accepted': {'title': 'Artwork Email - Accepted', 'path': 'app_email_setup_artwork_accept'},
+                                    'artwork_email_rejected': {'title': 'Artwork Email - Rejected', 'path': 'app_email_setup_artwork_reject'},
+                                    'quote_email_accepted': {'title': 'Quote Email - Accepted', 'path': 'app_email_setup_quote'},
+                                    'quote_email_change_request': {'title': 'Quote Email - Change Request', 'path': 'app_email_setup_quote_request_change'},
+                                    'quote_email_decline': {'title': 'Quote Email - Decline', 'path': 'app_email_setup_quote_decline'}
+                                }
+                            }
+                        } %}
+
+                        {% for key, item in menu %}
+                            {% if item.children is defined %}
+                                <li class="nav-item has-treeview {{ app.request.get('_route')|split('_')[1] == key ? 'menu-open' : '' }}">
+                                    <a href="#" class="nav-link {{ app.request.get('_route')|split('_')[1] == key ? 'active' : '' }}">
+                                        <i class="nav-icon fas {{ item.icon }}"></i>
+                                        <p>
+                                            {{ item.title }}
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        {% for child_key, child in item.children %}
+                                            <li class="nav-item">
+                                                <a href="{{ path(child.path) }}" class="nav-link {{ app.request.get('_route') == child.path ? 'active' : '' }}">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>{{ child.title }}</p>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a href="{{ path(item.path) }}" class="nav-link {{ app.request.get('_route') == item.path ? 'active' : '' }}">
+                                        <i class="nav-icon fas {{ item.icon }}"></i>
+                                        <p>{{ item.title }}</p>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        {# Content Wrapper #}
+        <div class="content-wrapper">
+            {# Content Header #}
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">{% block page_title %}Dashboard{% endblock %}</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                {% block breadcrumb %}
+                                    <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Home</a></li>
+                                    <li class="breadcrumb-item active">Dashboard</li>
+                                {% endblock %}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Main content #}
+            <section class="content">
+                <div class="container-fluid">
+                    {% block content %}{% endblock %}
+                </div>
+            </section>
+        </div>
+
+        {# Footer #}
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-inline">
+                Version 1.0.0
+            </div>
+            <strong>Copyright &copy; {{ "now"|date("Y") }} <a href="https://promoquoter.com">PromoQuoter</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/third_party/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ asset('assets/js/third_party/dcalendar.picker.js') }}"></script>
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+{% endblock %} 

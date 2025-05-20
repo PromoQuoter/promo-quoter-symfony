@@ -1,0 +1,155 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Screenshots{% endblock %}
+
+{% block content %}
+    {# Banner #}
+    <div class="ratio position-relative" style="--bs-aspect-ratio: 47%;">
+        <img src="{{ asset('assets/home/images/inr-ban.jpg') }}" 
+             class="d-block w-100 h-100"
+             style="object-fit: cover;"
+             alt="Screenshots Banner"/>
+        <div class="position-absolute top-0 left-0 right-0 bottom-0 d-flex">
+            <div class="container my-auto text-center">
+                <h1 class="fw-bolder">Screenshots</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    {# Screenshots Section #}
+    <section class="px-5 py-8" id="what">
+        <div class="container">
+            {% set screenshots = [
+                {
+                    'image': 'promo-data.jpg',
+                    'title': 'PROMO DATA PRODUCT SEARCH',
+                    'description': 'Search from over 44,000 products with live pricing using The Promodata API plugin.\nNarrow your search by supplier if required. Find the right product for your requirements in seconds.'
+                },
+                {
+                    'image': 'customer-crm.jpg',
+                    'title': 'CUSTOMER CRM',
+                    'description': 'Promo Quoter\'s customer CRM is a simple but easy to use interface that allows you to keep track of all your customers information.\nYou can add multiple contacts within the same company, assign a lead source and an account manager to each contact and keep a time and date stamp on each note entry.\nYou can add a picture or company logo to each contact as well as keeping company notes and individual contact notes.'
+                },
+                {
+                    'image': 'jobs.jpg',
+                    'title': 'JOBS SECTION',
+                    'description': 'When a customer accepts a quote, simply create a new job to begin the production process.\nKeep notes throughout the process to ensure nothing is missed.\nWith the Xero integration feature, simply create your purchase order with the touch of a button. No duplication required.'
+                },
+                {
+                    'image': 'jobs-overview.jpg',
+                    'title': 'JOBS OVERVIEW',
+                    'description': 'Keep track of each step of the job with our unique colour coded progress bar.\nThe jobs list gives you an overview at a glance to see every stage of every job.'
+                },
+                {
+                    'image': 'supplier-crm.jpg',
+                    'title': 'SUPPLIER CRM',
+                    'description': 'Promo Quoter\'s Supplier CRM is an easy way to keep all of your suppliers information in one place.\nQuickly find your suppliers\' website, contact information and any notes you might have including website logins and passwords.'
+                },
+                {
+                    'image': 'quotes.jpg',
+                    'title': 'QUOTES',
+                    'description': 'Promo Quoter has been designed with the user in mind. It has a clean, simple to use interface that is packed full of useful features.\nYou can easily see how much profit you have in a quote and adjust your margin accordingly.\nYou can easily track individual sales staff performance to make sure you are not missing opportunities.'
+                }
+            ] %}
+
+            {% for screenshot in screenshots %}
+                <div class="row mt-5 {% if loop.index is even %}flex-row-reverse{% endif %}">
+                    <div class="col-md-6">
+                        <a class="image-popup-no-margins"
+                           href="{{ asset('media/home/screenshots/' ~ screenshot.image) }}">
+                            <div class="ratio ratio-16x9">
+                                <img class="rounded-3 border" 
+                                     style="object-fit: cover; object-position: top left;"
+                                     src="{{ asset('media/home/screenshots/' ~ screenshot.image) }}"
+                                     alt="{{ screenshot.title }}"/>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="text fw-bold">{{ screenshot.title }}</h2>
+                        {% for line in screenshot.description|split('\n') %}
+                            <p>{{ line }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <p class="mt-5 mb-0 text-center fw-bolder">
+                With hundreds of additional features, sign up for a demonstration now to see first-hand how Promo Quoter
+                can unleash the potential of your business.
+            </p>
+        </div>
+    </section>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* padding-bottom and top for image */
+        .mfp-no-margins img.mfp-img {
+            padding: 0;
+        }
+
+        /* position of shadow behind the image */
+        .mfp-no-margins .mfp-figure:after {
+            top: 0;
+            bottom: 0;
+        }
+
+        /* padding for main container */
+        .mfp-no-margins .mfp-container {
+            padding: 0;
+        }
+
+        /*
+        for zoom animation
+        uncomment this part if you haven't added this code anywhere else
+        */
+        .mfp-with-zoom .mfp-container,
+        .mfp-with-zoom.mfp-bg {
+            opacity: 0;
+            -webkit-backface-visibility: hidden;
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            -o-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+        }
+
+        .mfp-with-zoom.mfp-ready .mfp-container {
+            opacity: 1;
+        }
+
+        .mfp-with-zoom.mfp-ready.mfp-bg {
+            opacity: 0.8;
+        }
+
+        .mfp-with-zoom.mfp-removing .mfp-container,
+        .mfp-with-zoom.mfp-removing.mfp-bg {
+            opacity: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.image-popup-no-margins').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                closeBtnInside: false,
+                fixedContentPos: true,
+                mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+                image: {
+                    verticalFit: true
+                },
+                zoom: {
+                    enabled: true,
+                    duration: 300 // don't forget to change the duration also in CSS
+                }
+            });
+        });
+    </script>
+{% endblock %}

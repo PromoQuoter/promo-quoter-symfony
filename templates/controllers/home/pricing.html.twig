@@ -1,0 +1,14 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Pricing{% endblock %}
+
+{% block content %}
+<div class="inr-ban">
+    <img class="img-fluid" src="{{ asset('assets/home/images/inr-ban.jpg') }}" alt=""/>
+    <h2 class="page-title">Pricing</h2>
+</div>
+
+<div class="clearfix"></div>
+
+    {% include 'components/home/plan_pricing.html.twig' %}
+{% endblock %}

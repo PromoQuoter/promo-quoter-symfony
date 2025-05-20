@@ -1,0 +1,45 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block content %}
+<div class="inr-ban">
+    <img class="img-fluid" src="{{ asset('assets/home/images/inr-ban.jpg') }}" alt=""/>
+    <h2 class="page-title">FAQ</h2>
+</div>
+<div class="clearfix"></div>
+<section class="main-sec" id="what">
+    <div class="container">
+        <div class="accordion-prt">
+            <div id="accordion" class="row mt-5">
+                <div class="offset-md-1 col-md-10">
+                    {% if all_faq is not empty %}
+                        {% for faq in all_faq %}
+                            {% set ss = loop.index %}
+                            {% set wword = ss|format_number(style: 'spellout') %}
+                            <div class="card">
+                                <div class="card-header" id="heading{{ wword }}">
+                                    <button class="btn {{ ss != 1 ? 'collapsed' : '' }}" data-toggle="collapse"
+                                            data-target="#collapse{{ wword }}"
+                                            aria-expanded="{{ ss != 1 ? 'false' : 'true' }}"
+                                            aria-controls="collapse{{ wword }}">
+                                        <p>{{ faq.question }}
+                                            <i class="fa" aria-hidden="true"></i>
+                                        </p>
+                                    </button>
+                                </div>
+                                <div id="collapse{{ wword }}" class="collapse {{ ss == 1 ? 'show' : '' }}"
+                                     aria-labelledby="heading{{ wword }}" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>{{ faq.answer }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/home_old.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+{% endblock %}
+
+{% block body_class %}d-flex flex-column min-vh-100{% endblock %}
+
+{% block header %}
+    <header>
+        <div class="sticky-top shadow-sm">
+            {# Contact row #}
+            <div class="bg-dark border-top border-promo border-2">
+                <div class="py-1 container d-flex justify-content-md-between justify-content-center align-content-center flex-wrap">
+                    <div class="top-links justify-content-center">
+                        <a class="text-decoration-none" href="{{ path('app_contact_us') }}">Support</a>
+                        <a class="text-decoration-none" href="{{ path('app_faq') }}">FAQ</a>
+                    </div>
+
+                    <div class="top-contact d-none d-md-flex">
+                        <div class="contact">
+                            <i class="fa fa-envelope"></i>
+                            <a class="text-decoration-none" href="mailto:info@promoquoter.com">info@promoquoter.com</a>
+                        </div>
+                        <div class="contact">
+                            <i class="fa fa-phone"></i>
+                            <a class="text-decoration-none" href="tel:+61 418 964 664">+61 418 964 664</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Nav links #}
+            <nav class="navbar navbar-expand-md bg-white">
+                <div class="container">
+                    {# Logo #}
+                    <a class="navbar-brand" href="{{ path('app_home') }}">
+                        <img src="{{ asset('assets/images/logos/logo-animated.gif') }}" alt="" height="48"/>
+                    </a>
+
+                    {# Mobile toggle #}
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navContent" aria-controls="navContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    {# Nav content #}
+                    <div class="collapse navbar-collapse justify-content-end" id="navContent">
+                        <ul class="navbar-nav" id="normal-menu">
+                            {# TODO: Uncomment these #}
+                            {% set menu = {
+                                'Home': {'path': 'app_home'},
+                                'About': {'path': 'app_about'},
+                                'Screenshots': {'path': 'app_screenshots'},
+                                'Pricing': {'path': 'app_pricing'},
+                                'Contact Us': {'path': 'app_contact_us'}
+                            } %}
+{#                            {% set menu = {#}
+{#                                'Home': {'path': 'app_home'},#}
+{#                                'About': {'path': 'app_about'},#}
+{#                                'Screenshots': {'path': 'app_screenshots'},#}
+{#                                'Pricing': {'path': 'app_pricing'},#}
+{#                                'Book Demo': {'path': 'app_book_demo'},#}
+{#                                'Contact Us': {'path': 'app_contact'}#}
+{#                            } %}#}
+
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                {% set menu = menu|merge({'Dashboard': {'path': 'app_dashboard', 'highlight': true}}) %}
+                            {% else %}
+                                {# TODO: Add this back #}
+{#                                {% set menu = menu|merge({'Sign Up': {'path': 'app_register', 'highlight': true}}) %}#}
+                            {% endif %}
+
+                            {% for name, item in menu %}
+                                <li class="nav-item">
+                                    <a class="w-100 btn {{ item.highlight is defined and item.highlight ? 'btn-promo' : 'btn-hover-outline-promo' }} {{ app.request.get('_route') == item.path ? 'active' : '' }} text-uppercase"
+                                       href="{{ path(item.path) }}">{{ name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+{% endblock %}
+
+{% block body %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/home.js') }}"></script>
+    <script src="{{ asset('assets/js/common_quoter.js') }}"></script>
+{% endblock %} 
