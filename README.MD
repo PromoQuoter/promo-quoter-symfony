@@ -5,6 +5,8 @@
 ### Controllers
 
 - [x] Home.php
+- [ ] Home
+  - [ ] BookDemo.php
 - Admin
   - Dev.php
   - Users.php
@@ -28,8 +30,6 @@
 - Auth.php
 - Category.php
 - Dashboard.php
-- Home
-  - BookDemo.php
 - Overview.php
 - Quotes.php
 - Supplier.php

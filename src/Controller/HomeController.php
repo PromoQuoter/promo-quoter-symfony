@@ -10,6 +10,7 @@ use App\Repository\UsersToDoRepository;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -17,6 +18,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Carbon\Carbon;
+use App\Entity\BookDemo;
+use App\Form\BookDemoType;
+use App\Repository\BookDemoRepository;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Uid\Ulid;
 
 class HomeController extends AbstractController
 {
@@ -25,13 +33,15 @@ class HomeController extends AbstractController
     private ClientsFeedbackRepository $clientFeedbackRepository;
     private FaqRepository $faqRepository;
     private UsersToDoRepository $todoRepository;
+    private MailerInterface $mailer;
 
     public function __construct(
         EntityManagerInterface    $entityManager,
         Security                  $security,
         ClientsFeedbackRepository $clientFeedbackRepository,
         FaqRepository             $faqRepository,
-        UsersToDoRepository       $todoRepository
+        UsersToDoRepository       $todoRepository,
+        MailerInterface           $mailer,
     )
     {
         $this->entityManager = $entityManager;
@@ -39,6 +49,7 @@ class HomeController extends AbstractController
         $this->clientFeedbackRepository = $clientFeedbackRepository;
         $this->faqRepository = $faqRepository;
         $this->todoRepository = $todoRepository;
+        $this->mailer = $mailer;
     }
 
     #[Route('/', name: 'app_home')]
@@ -150,6 +161,59 @@ class HomeController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Route('/book-demo', name: 'app_book_demo')]
+    public function bookDemo(Request $request): Response
+    {
+        $booking = new BookDemo();
+        $form = $this->createForm(BookDemoType::class, $booking);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Generate a unique identifier
+            $booking->setCuid(new Ulid());
+
+            // Set the date/time
+            $date = $form->get('date')->getData();
+            $time = $form->get('time')->getData();
+            $datetime = new DateTimeImmutable($date->format('Y-m-d') . ' ' . $time);
+            $booking->setDate($datetime);
+
+            // Save to database
+            $this->entityManager->persist($booking);
+            $this->entityManager->flush();
+
+            // Send confirmation emails
+            $this->sendBookingConfirmationEmail($booking);
+            $this->sendBookingAdminNotificationEmail($booking);
+
+            return $this->redirectToRoute('app_book_demo_thanks', [
+                'cuid' => $booking->getCuid()
+            ]);
+        }
+
+        return $this->render('controllers/home/book_demo.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/book-demo/thanks/{cuid}', name: 'app_book_demo_thanks')]
+    public function bookDemoThanks(string $cuid, BookDemoRepository $bookDemoRepository): Response
+    {
+        $booking = $bookDemoRepository->findOneBy(['cuid' => $cuid]);
+
+        if (!$booking) {
+            $this->addFlash('error', 'Sorry, we could not find your booking.');
+            return $this->redirectToRoute('app_book_demo');
+        }
+
+        return $this->render('controllers/home/book_demo_success.html.twig', [
+            'booking' => $booking
+        ]);
+    }
+
     // TODO: Move these someday
     #[Route('/todo/add', name: 'app_add_todo', methods: ['POST'])]
     public function addTodo(Request $request): JsonResponse
@@ -214,12 +278,44 @@ class HomeController extends AbstractController
         return $this->json(['success' => true]);
     }
 
+    private function sendBookingConfirmationEmail(BookDemo $booking): void
+    {
+        // TODO: Implement
+//        $email = (new Email())
+//            ->from($this->adminEmail)
+//            ->to($booking->getEmail())
+//            ->subject('Your booking is confirmed')
+//            ->html(
+//                $this->renderView('emails/book_demo_user.html.twig', [
+//                    'booking' => $booking
+//                ])
+//            );
+//
+//        $this->mailer->send($email);
+    }
+
+    private function sendBookingAdminNotificationEmail(BookDemo $booking): void
+    {
+        // TODO: Implement
+//        $email = (new Email())
+//            ->from($this->adminEmail)
+//            ->to($this->adminEmail)
+//            ->subject('New demo booking')
+//            ->html(
+//                $this->renderView('emails/book_demo_admin.html.twig', [
+//                    'booking' => $booking
+//                ])
+//            );
+//
+//        $this->mailer->send($email);
+    }
+
     private function sendContactNotificationEmail(ContactUs $contact): void
     {
         // TODO: Implement using Symfony Mailer
-        $message = $this->renderView('emails/contact_notification.html.twig', [
-            'contact' => $contact
-        ]);
+//        $message = $this->renderView('emails/contact_notification.html.twig', [
+//            'contact' => $contact
+//        ]);
 
         // You'll need to setup Symfony Mailer and implement the actual email sending logic here
     }

@@ -50,22 +50,14 @@
                     {# Nav content #}
                     <div class="collapse navbar-collapse justify-content-end" id="navContent">
                         <ul class="navbar-nav" id="normal-menu">
-                            {# TODO: Uncomment these #}
                             {% set menu = {
                                 'Home': {'path': 'app_home'},
                                 'About': {'path': 'app_about'},
                                 'Screenshots': {'path': 'app_screenshots'},
                                 'Pricing': {'path': 'app_pricing'},
+                                'Book Demo': {'path': 'app_book_demo'},
                                 'Contact Us': {'path': 'app_contact_us'}
                             } %}
-{#                            {% set menu = {#}
-{#                                'Home': {'path': 'app_home'},#}
-{#                                'About': {'path': 'app_about'},#}
-{#                                'Screenshots': {'path': 'app_screenshots'},#}
-{#                                'Pricing': {'path': 'app_pricing'},#}
-{#                                'Book Demo': {'path': 'app_book_demo'},#}
-{#                                'Contact Us': {'path': 'app_contact'}#}
-{#                            } %}#}
 
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                 {% set menu = menu|merge({'Dashboard': {'path': 'app_dashboard', 'highlight': true}}) %}

@@ -14,7 +14,7 @@ final class Version20250514134513 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Sync database state with Symfony Entities';
     }
 
     public function up(Schema $schema): void

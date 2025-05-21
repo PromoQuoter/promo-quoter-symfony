@@ -1,0 +1,68 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Book a Demo - Success{% endblock %}
+
+{% block content %}
+    {# Banner #}
+    <div class="ratio position-relative" style="--bs-aspect-ratio: 47%;">
+        <img src="{{ asset('assets/home/images/inr-ban.jpg') }}" 
+             class="d-block w-100 h-100"
+             style="object-fit: cover;"
+             alt="Book a Demo Banner"/>
+        <div class="position-absolute top-0 left-0 right-0 bottom-0 d-flex">
+            <div class="container my-auto text-center">
+                <h1 class="fw-bolder">Book a Demo</h1>
+            </div>
+        </div>
+    </div>
+
+    <section class="px-5 py-8">
+        <div class="container">
+            <h1 class="fw-bold">SUCCESS!</h1>
+            <p class="pt-2">Thank you for booking a demo with us. We have emailed the details of your booking to
+                <strong>{{ booking.email }}</strong>.</p>
+
+            <table class="table table-borderless">
+                <tr>
+                    <th>Full Name</th>
+                    <td>{{ booking.fullName }}</td>
+                </tr>
+                <tr>
+                    <th>Organization</th>
+                    <td>{{ booking.organization }}</td>
+                </tr>
+                <tr>
+                    <th>Phone No.</th>
+                    <td>{{ booking.phone }}</td>
+                </tr>
+                <tr>
+                    <th>Time</th>
+                    <td>{{ booking.date|date('jS F, Y') }} at {{ booking.date|date('h:i A') }}</td>
+                </tr>
+                <tr>
+                    <th>Platform</th>
+                    <td>
+                        {{ booking.platform }}
+                        {% if booking.platformUsername %}
+                            <small class="text-secondary">({{ booking.platformUsername }})</small>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {% if booking.notes %}
+                    <tr>
+                        <th>Notes</th>
+                        <td>{{ booking.notes }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+
+            {# TODO: Cancel booking button #}
+
+            <p class="pt-2">
+                If you have any questions, please contact us at <a
+                        href="mailto:info@promoquoter.com">info@promoquoter.com</a>.
+            </p>
+        </div>
+    </section>
+{% endblock %}

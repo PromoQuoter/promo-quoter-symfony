@@ -1,0 +1,120 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Book a Demo{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css"
+          crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+    {# Banner #}
+    <div class="ratio position-relative" style="--bs-aspect-ratio: 47%;">
+        <img src="{{ asset('assets/home/images/inr-ban.jpg') }}"
+             class="d-block w-100 h-100"
+             style="object-fit: cover;"
+             alt="Book a Demo Banner"/>
+        <div class="position-absolute top-0 left-0 right-0 bottom-0 d-flex">
+            <div class="container my-auto text-center">
+                <h1 class="fw-bolder">Book a Demo</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <section class="px-5 py-8">
+        <div class="container">
+            <h1 class="fw-bold">BOOK A DEMO</h1>
+            <p>
+                We are delighted to offer you a complimentary product demonstration. Kindly complete the form below and
+                indicate your preferred date and time for the demonstration. We will promptly get in touch with you to
+                confirm the appointment.
+            </p>
+
+            {{ form_start(form, {'attr': {'class': 'row g-2'}}) }}
+
+            {# User Details #}
+            <div class="form-group col-md-6">
+                {{ form_row(form.full_name) }}
+            </div>
+
+            <div class="form-group col-md-6">
+                {{ form_row(form.organization) }}
+            </div>
+
+            {# Contact Details #}
+            <div class="form-group col-md-6">
+                {{ form_row(form.email) }}
+            </div>
+
+            <div class="form-group col-md-6">
+                {{ form_row(form.phone) }}
+            </div>
+
+            {# Date & Time #}
+            <div class="form-group col-md-6">
+                {{ form_row(form.date) }}
+            </div>
+
+            <div class="form-group col-md-6">
+                {{ form_row(form.time) }}
+            </div>
+
+            {# Platform #}
+            <div class="form-group col-md-6">
+                {{ form_row(form.platform) }}
+            </div>
+
+            <div class="form-group col-md-6">
+                {{ form_row(form.platform_username) }}
+            </div>
+
+            {# Note #}
+            <div class="form-group col-md-12">
+                {{ form_row(form.notes) }}
+            </div>
+
+            {# Submit #}
+            <div class="form-group">
+                {{ form_row(form.submit) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {# Date Picker #}
+    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js"
+            crossorigin="anonymous"></script>
+
+    {# MomentJS #}
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+
+    <script>
+        // Initialize date picker
+        new tempusDominus.TempusDominus(document.getElementById('{{ form.date.vars.id }}'), {
+            keepInvalid: true,
+            localization: {
+                format: 'dd/MM/yyyy'
+            },
+            restrictions: {
+                daysOfWeekDisabled: [0, 6],
+                minDate: moment().add(1, 'days').startOf('day').toDate(),
+                maxDate: moment().add(3, 'months').endOf('day').toDate()
+            },
+            display: {
+                components: {
+                    clock: false,
+                    hours: false,
+                    minutes: false
+                }
+            }
+        });
+    </script>
+{% endblock %}

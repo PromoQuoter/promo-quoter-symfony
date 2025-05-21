@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BookDemoRepository;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -34,12 +35,12 @@ class BookDemo
     private ?string $phone = null;
 
     #[ORM\Column]
-    private ?DateTime $date = null;
+    private ?DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 255)]
     private ?string $platform = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $platform_username = null;
 
     #[ORM\Column(length: 255)]
@@ -110,12 +111,12 @@ class BookDemo
         return $this;
     }
 
-    public function getDate(): ?DateTime
+    public function getDate(): ?DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(DateTime $date): static
+    public function setDate(DateTimeImmutable $date): static
     {
         $this->date = $date;
 
@@ -124,7 +125,7 @@ class BookDemo
 
     public function getPlatform(): ?string
     {
-        return $this->playtorm;
+        return $this->platform;
     }
 
     public function setPlatform(string $platform): static
