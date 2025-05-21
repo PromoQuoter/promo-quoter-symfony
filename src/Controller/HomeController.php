@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\BookDemo;
 use App\Entity\ContactUs;
 use App\Entity\UsersToDo;
+use App\Form\BookDemoType;
+use App\Repository\BookDemoRepository;
 use App\Repository\ClientsFeedbackRepository;
 use App\Repository\FaqRepository;
 use App\Repository\UsersToDoRepository;
-use DateTime;
+use Carbon\Carbon;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -16,40 +19,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
-use Carbon\Carbon;
-use App\Entity\BookDemo;
-use App\Form\BookDemoType;
-use App\Repository\BookDemoRepository;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Ulid;
 
 class HomeController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-    private Security $security;
-    private ClientsFeedbackRepository $clientFeedbackRepository;
-    private FaqRepository $faqRepository;
-    private UsersToDoRepository $todoRepository;
-    private MailerInterface $mailer;
 
     public function __construct(
-        EntityManagerInterface    $entityManager,
-        Security                  $security,
-        ClientsFeedbackRepository $clientFeedbackRepository,
-        FaqRepository             $faqRepository,
-        UsersToDoRepository       $todoRepository,
-        MailerInterface           $mailer,
+        private readonly EntityManagerInterface    $entityManager,
+        private readonly Security                  $security,
+        private readonly ClientsFeedbackRepository $clientFeedbackRepository,
+        private readonly FaqRepository             $faqRepository,
+        private readonly UsersToDoRepository       $todoRepository,
+        private readonly MailerInterface           $mailer,
     )
     {
-        $this->entityManager = $entityManager;
-        $this->security = $security;
-        $this->clientFeedbackRepository = $clientFeedbackRepository;
-        $this->faqRepository = $faqRepository;
-        $this->todoRepository = $todoRepository;
-        $this->mailer = $mailer;
     }
 
     #[Route('/', name: 'app_home')]

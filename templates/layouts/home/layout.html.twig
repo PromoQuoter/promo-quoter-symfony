@@ -62,8 +62,7 @@
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                 {% set menu = menu|merge({'Dashboard': {'path': 'app_dashboard', 'highlight': true}}) %}
                             {% else %}
-                                {# TODO: Add this back #}
-{#                                {% set menu = menu|merge({'Sign Up': {'path': 'app_register', 'highlight': true}}) %}#}
+                                {% set menu = menu|merge({'Sign Up': {'path': 'app_register', 'highlight': true}}) %}
                             {% endif %}
 
                             {% for name, item in menu %}

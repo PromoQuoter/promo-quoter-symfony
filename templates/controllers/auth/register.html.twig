@@ -1,0 +1,97 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
+
+{% block content %}
+    <section class="px-5 py-8">
+        <div class="container d-flex justify-content-center">
+            <div class="card col-12 col-md-6 shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h5 class="card-title">Register</h5>
+                        <span class="text-muted">Sign up for a new account.</span>
+                    </div>
+
+                    {% if invite is defined and invite %}
+                        <div class="alert alert-info" role="alert">
+                            <i class="fa fa-fw fa-info-circle"></i>
+                            You have been invited to join
+                            <strong>{{ company.name|default('Unknown Company') }}</strong>.<br/>
+                            Not the company you want to join? <a href="{{ path('app_invalidate_company_invite') }}">Sign
+                                up for a new account</a>.
+                        </div>
+                    {% endif %}
+
+                    {% for flash_error in app.flashes('verify_email_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                    {% endfor %}
+
+                    {% if app.flashes('error') %}
+                        {% for message in app.flashes('error') %}
+                            <div class="alert alert-danger" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {{ form_start(registrationForm) }}
+                    <div class="row mb-3 mt-3">
+                        <div class="col-md-6">
+                            {{ form_row(registrationForm.username) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(registrationForm.email) }}
+                        </div>
+                    </div>
+
+                    <div class="row{% if invite is not defined or not invite %} mb-3{% endif %}">
+                        <div class="col-md-6">
+                            {{ form_row(registrationForm.plainPassword.first) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(registrationForm.plainPassword.second) }}
+                        </div>
+                    </div>
+
+                    {% if invite is not defined or not invite %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(registrationForm.company) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(registrationForm.phone) }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {{ form_row(registrationForm.agreeTerms) }}
+
+                    {# reCAPTCHA #}
+                    <div class="col-12 mb-3" style="display: flex; justify-content: center;">
+                        <div class="g-recaptcha" data-sitekey="6LcR4HwpAAAAACiB5BGzciqL5RvRCWRgT6OUGYK-"></div>
+                    </div>
+
+                    {# Submit #}
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-promo w-100">Register</button>
+                    </div>
+
+                    {# Divider #}
+                    <hr class="my-3"/>
+
+                    {# Login Link #}
+                    {# TODO: Add this back #}
+                    {#                        <p class="text-center m-0 text-secondary"> #}
+                    {#                            Already have an account? #}
+                    {#                            <a class="text-decoration-none" href="{{ path('app_login') }}">Login</a> #}
+                    {#                        </p> #}
+
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

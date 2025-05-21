@@ -5,12 +5,11 @@
 ### Controllers
 
 - [x] Home.php
-- [ ] Home
-  - [ ] BookDemo.php
+- [x] Home
+  - [x] BookDemo.php
 - Admin
   - Dev.php
   - Users.php
-- BaseController.php
 - Company.php
 - Email_setup_artwork.php
 - Job_tracking.php
@@ -39,3 +38,5 @@
 - Partsdatabase.php
 - Salesman.php
 - Upload.php
+
+-nhttps://symfony.com/doc/current/security/voters.html
