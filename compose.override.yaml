@@ -1,5 +1,51 @@
-
+# Development environment override
 services:
+  php:
+    build:
+      context: .
+      target: frankenphp_dev
+    volumes:
+      - ./:/app
+      - ./frankenphp/Caddyfile:/etc/frankenphp/Caddyfile:ro
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
+      # If you develop on Mac or Windows you can remove the vendor/ directory
+      #  from the bind-mount for better performance by enabling the next line:
+      - /app/vendor
+    environment:
+      FRANKENPHP_WORKER_CONFIG: watch
+      MERCURE_EXTRA_DIRECTIVES: demo
+      # See https://xdebug.org/docs/all_settings#mode
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+      APP_ENV: "${APP_ENV:-dev}"
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
+    tty: true
+
+  php-worker:
+    profiles:
+      - donotstart
+
+  php-worker-async:
+    scale: 2
+    extends:
+      file: compose.yaml
+      service: php-worker
+    image: ${IMAGES_PREFIX:-}app-php-worker-async
+    build:
+      context: .
+      target: frankenphp_dev
+    command: ['bin/console', 'messenger:consume', 'async', '-vv', '--time-limit=60', '--limit=10', '--memory-limit=128M']
+    volumes:
+      - ./:/app
+      - /app/var/
+    depends_on:
+      php:
+        condition: service_healthy
+
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
+
 ###> doctrine/doctrine-bundle ###
   database:
     ports:
@@ -10,8 +56,8 @@ services:
   mailer:
     image: axllent/mailpit
     ports:
-      - "1025:1025"
-      - "8025:8025"
+      - "1025"
+      - "8025"
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1

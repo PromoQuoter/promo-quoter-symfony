@@ -51,6 +51,7 @@ class AuthController extends AbstractController
 
             // do anything else you need here, like send an email
 
+            // TODO: Redirect to a "Check your email" route
             return $this->redirectToRoute('app_home');
         }
 
