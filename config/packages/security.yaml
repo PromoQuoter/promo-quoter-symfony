@@ -20,6 +20,24 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            form_login:
+                username_parameter: email
+                password_parameter: password
+                login_path: app_login
+                check_path: app_auth_check
+                enable_csrf: true
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+
+            remember_me:
+                remember_me_parameter: remember_me
+
+            login_link:
+                check_route: app_auth_check
+                signature_properties: ['id', 'email']
+                lifetime: 300
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

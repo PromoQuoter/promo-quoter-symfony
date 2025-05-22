@@ -1,0 +1,49 @@
+/* Header - Links */
+.top-links {
+    display: flex;
+    align-items: center;
+}
+
+.top-links a {
+    color: var(--bs-light);
+    padding: 0 7px 0 7px;
+    font-size: 14px;
+    font-weight: 400;
+    border-right: 1px solid #ffffff;
+    line-height: 14px;
+}
+
+.top-links a:first-child {
+    padding-left: 0;
+}
+
+.top-links a:hover {
+    color: var(--bs-promo);
+}
+
+.top-links a:last-child {
+    border-right: none;
+}
+
+/* Header - Contacts */
+.top-contact {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.top-contact div.contact {
+    font-size: 14px;
+    padding-left: 14px;
+    color: #ffffff;
+}
+
+.top-contact div.contact i {
+    color: #999796;
+    font-size: 15px;
+    margin-right: 6px;
+}
+
+.top-contact div.contact a {
+    color: #ffffff;
+}

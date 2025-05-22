@@ -14,55 +14,55 @@
                 <h1 class="fw-bolder">Book a Demo</h1>
             </div>
         </div>
-    </div>
+</div>
 
     <section class="px-5 py-8">
-        <div class="container">
-            <h1 class="fw-bold">SUCCESS!</h1>
-            <p class="pt-2">Thank you for booking a demo with us. We have emailed the details of your booking to
+    <div class="container">
+        <h1 class="fw-bold">SUCCESS!</h1>
+        <p class="pt-2">Thank you for booking a demo with us. We have emailed the details of your booking to
                 <strong>{{ booking.email }}</strong>.</p>
 
-            <table class="table table-borderless">
-                <tr>
-                    <th>Full Name</th>
+        <table class="table table-borderless">
+            <tr>
+                <th>Full Name</th>
                     <td>{{ booking.fullName }}</td>
-                </tr>
-                <tr>
-                    <th>Organization</th>
+            </tr>
+            <tr>
+                <th>Organization</th>
                     <td>{{ booking.organization }}</td>
-                </tr>
-                <tr>
-                    <th>Phone No.</th>
+            </tr>
+            <tr>
+                <th>Phone No.</th>
                     <td>{{ booking.phone }}</td>
-                </tr>
-                <tr>
-                    <th>Time</th>
+            </tr>
+            <tr>
+                <th>Time</th>
                     <td>{{ booking.date|date('jS F, Y') }} at {{ booking.date|date('h:i A') }}</td>
-                </tr>
-                <tr>
-                    <th>Platform</th>
-                    <td>
+            </tr>
+            <tr>
+                <th>Platform</th>
+                <td>
                         {{ booking.platform }}
                         {% if booking.platformUsername %}
                             <small class="text-secondary">({{ booking.platformUsername }})</small>
                         {% endif %}
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
                 {% if booking.notes %}
-                    <tr>
-                        <th>Notes</th>
+            <tr>
+                <th>Notes</th>
                         <td>{{ booking.notes }}</td>
-                    </tr>
+            </tr>
                 {% endif %}
-            </table>
+        </table>
 
             {# TODO: Cancel booking button #}
 
-            <p class="pt-2">
-                If you have any questions, please contact us at <a
-                        href="mailto:info@promoquoter.com">info@promoquoter.com</a>.
-            </p>
-        </div>
-    </section>
+        <p class="pt-2">
+            If you have any questions, please contact us at <a
+                    href="mailto:info@promoquoter.com">info@promoquoter.com</a>.
+        </p>
+    </div>
+</section>
 {% endblock %}

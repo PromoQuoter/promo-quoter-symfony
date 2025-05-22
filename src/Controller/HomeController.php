@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\BookDemo;
 use App\Entity\ContactUs;
 use App\Entity\UsersToDo;
-use App\Form\BookDemoType;
+use App\Form\BookDemoForm;
 use App\Repository\BookDemoRepository;
 use App\Repository\ClientsFeedbackRepository;
 use App\Repository\FaqRepository;
@@ -154,7 +154,7 @@ class HomeController extends AbstractController
     public function bookDemo(Request $request): Response
     {
         $booking = new BookDemo();
-        $form = $this->createForm(BookDemoType::class, $booking);
+        $form = $this->createForm(BookDemoForm::class, $booking);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

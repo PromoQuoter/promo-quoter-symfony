@@ -1,0 +1,29 @@
+{% extends 'layouts/email/layout.html.twig' %}
+
+{% block content %}
+    <div style="padding: 20px; max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif;">
+        <h1 style="color: #333; font-size: 24px; margin-bottom: 20px;">Welcome back to PromoQuoter!</h1>
+
+        <p style="color: #666; font-size: 16px; line-height: 1.5; margin-bottom: 25px;">
+            You requested a secure login link to access your PromoQuoter account. Click the button below to sign in:
+        </p>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ action_url }}" 
+               style="background-color: #0d6efd; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+                Sign In to PromoQuoter
+            </a>
+        </div>
+
+        <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 15px;">
+            This login link will expire in 1 hour for security reasons. If you didn't request this link, you can safely ignore this email.
+        </p>
+
+        <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px;">
+            <p style="color: #999; font-size: 12px; margin: 0;">
+                If the button above doesn't work, copy and paste this link into your browser:<br>
+                <span style="color: #666;">{{ action_url }}</span>
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,119 @@
+/*
+ * Sidebar
+ */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        top: 48px;
+        padding: 0;
+    }
+}
+
+.sidebar-sticky {
+    height: calc(100vh - 48px);
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: var(--bs-gray-800);
+}
+
+.sidebar .nav-link.active {
+    color: var(--bs-primary);
+}
+
+.sidebar-heading {
+    font-size: .75rem;
+}
+
+/*
+ * Old compatibility
+ */
+.rt-content {
+    padding-top: 1rem;
+}
+
+/*
+ * Select2 Width Fix
+ */
+.select2-selection {
+    overflow: hidden;
+}
+
+.select2-selection__rendered {
+    white-space: normal;
+    word-break: break-all;
+}
+
+/*
+ * Select2 inline multi-select fix
+ * https://github.com/apalfrey/select2-bootstrap-5-theme/issues/86#issuecomment-2461958569
+ */
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: .3em .65em;
+}
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
+    display: inline-flex;
+    margin: .15em 0;
+}
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-search {
+    display: inline;
+}
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice:last-child {
+    margin-right: .65em;
+}
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-search .select2-search__field {
+    margin-top: .2em;
+}
+/* this ugly piece of style here allows us to hide the search bar (empty row) if we have no focus on the select, but still allow tab on it, while preserving the placeholder if no choices are selected */
+.select2-container--bootstrap-5:not(.select2-container--focus) .select2-selection--multiple .select2-selection__rendered:has(.select2-selection__choice) + .select2-search {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
+.error{
+    color: red;
+}
+.custom_alert_message{
+        padding: 6px;
+    font-size: 13px;
+}
+.alert-div{
+    font-size: 15px;
+    padding: 10px;
+    max-width: 280px;
+}
+.alert-btn-close{
+    float: right;
+    font-size: 12px;
+    padding-top: 10px;
+}
+/*
+ * Hide debug icon in print
+ */
+@media print {
+    #toolbarContainer {
+        display: none;
+    }
+}

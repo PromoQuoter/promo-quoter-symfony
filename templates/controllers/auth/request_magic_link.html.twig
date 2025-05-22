@@ -1,0 +1,79 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Request Magic Link{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
+
+{% block content %}
+    <section class="px-5 py-8">
+        <div class="container d-flex justify-content-center">
+            <div class="card col-12 col-md-6 shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h5 class="card-title">Request Magic Link</h5>
+                        <span class="text-muted">We'll send you a secure login link via email.</span>
+                    </div>
+
+                    {% for flash_error in app.flashes('verify_email_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger" role="alert">{{ message }}</div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success" role="alert">
+                            <i class="fa fa-fw fa-check-circle"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+
+                    {{ form_start(form) }}
+                        <!-- Email -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <i class="fa fa-envelope fa-fw"></i>
+                            </span>
+                            {{ form_widget(form.email, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'placeholder': 'Enter your email address',
+                                    'autocomplete': 'email',
+                                    'autofocus': true
+                                }
+                            }) }}
+                        </div>
+
+                        {% if form.email.vars.errors|length > 0 %}
+                            <div class="alert alert-danger">
+                                {{ form_errors(form.email) }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Hidden reCAPTCHA -->
+                        {{ form_widget(form.captcha) }}
+
+                        <button type="submit" class="btn btn-promo w-100">Send Magic Link</button>
+
+                        <!-- Divider -->
+                        <hr class="my-3"/>
+
+                        <p class="text-center m-0 text-secondary">
+                            Remember your password?
+                            <a class="text-decoration-none" href="{{ path('app_login') }}">Sign in</a>
+
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') == false %}
+                                &bullet;
+                                Need an account?
+                                <a class="text-decoration-none" href="{{ path('app_register') }}">Register</a>
+                            {% endif %}
+                        </p>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

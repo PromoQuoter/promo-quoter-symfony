@@ -2,6 +2,4 @@ framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
         envelope:
-            sender: 'admin@promoquoter.com'
-        headers:
-            From: 'PromoQuoter <admin@promoquoter.com>'
+            sender: 'PromoQuoter <admin@promoquoter.com>'

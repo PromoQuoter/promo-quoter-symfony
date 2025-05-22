@@ -1,0 +1,188 @@
+/* Quotes edit ------------------------------------------------------------------------------------------------------ */
+.ns-quote-box {
+    border: 1px solid #003;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.ns-box-title {
+    background-color: #ee5a1e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 28px;
+    padding: 15px 20px;
+    line-height: 30px;
+    border-bottom: 1px solid #003;
+    font-weight: bold;
+}
+.ns-quote-header {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "buttons summary"
+                         "body    summary";
+}
+.ns-button-row {
+    grid-area: buttons;
+    align-content: center;
+    border-bottom: 1px solid #003;
+    padding: 10px;
+}
+.ns-button-row .btn {
+    margin-right: 6px;
+}
+.ns-button-row .btn-success {
+    width: 150px;
+    font-weight: bold;
+    float: right;
+    margin-right: 0;
+}
+.ns-main-button-row {
+    text-align: right;
+    margin-top: 15px;
+}
+.ns-main-button-row button {
+    width: 200px;
+    margin-left: 10px;
+}
+.ns-quote-header-body {
+    grid-area: body;
+    padding: 15px;
+}
+.ns-quote-header-summary {
+    grid-area :summary;
+    background-color: #ddd;
+    border-left: 1px solid #003;
+    padding: 10px 15px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Modals ----------------------------------------------------------------------------------------------------------- */
+.ns-modal-dialog .modal-content {
+    /*border: 1px solid #003;*/
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px #0006;
+}
+.ns-modal-dialog .modal-header {
+    background-color: #ee5a1e;
+    /*border-bottom: 1px solid #003;*/
+}
+.ns-modal-dialog .modal-title {
+    color: #fff;
+    font-size: 16pt;
+}
+.ns-modal-dialog .modal-header small {
+    color: #fff;
+    margin-left: 10px;
+}
+.ns-modal-dialog .modal-header .close {
+    color: #fff;
+    background-color: transparent;
+    font-size: 20pt;
+    border: none;
+}
+.ns-modal-dialog .modal-header li {
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+.ns-modal-dialog .modal-header .live-dot1 {
+    width: 17px;
+    height: 17px;
+    border: 1px solid #fff;
+}
+.ns-modal-dialog .img-responsive /*, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img */ {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.text-right {
+    text-align: right;
+}
+.ns-modal-dialog .modal-header .live-dot1 {
+    width: 17px;
+    height: 17px;
+    border: 1px solid #fff;
+}
+
+.indicator-dot {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.indicator-dot.live-data {
+    background-color: #dc1a39;
+}
+
+.indicator-dot.saved-data {
+    background-color: #50cce4;
+}
+.indicator-legend {
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+.indicator-legend .indicator-dot {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #fff;
+}
+/*.select2-container--open {*/
+/*    z-index: 9999999;*/
+/*}*/
+
+/* ---------------------------------------------------------------------------------------------------- Product cards */
+#product-search-results {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+}
+.product-search-card {
+    cursor: pointer;
+}
+.product-search-card:hover {
+    box-shadow: 0 2px 9px #0002;
+}
+.product-search-card .indicator-dot {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+.product-search-card .card-title {
+    font-size: 13pt;
+}
+.product-search-card .card-img-top {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+}
+.card-title small {
+    display: block;
+    font-weight: normal;
+    margin-top: 5px;
+    color: #ee5a1e;
+}
+.card-text.product-card-description {
+    font-size: 10pt;
+    color: #888;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}
+#load-more-panel {
+    margin: 20px 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#load-more-panel p {
+    margin: 0;
+}

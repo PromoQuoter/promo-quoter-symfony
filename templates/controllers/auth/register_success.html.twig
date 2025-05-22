@@ -1,0 +1,57 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Registration Successful{% endblock %}
+
+{% block content %}
+    <section class="px-5 py-8">
+        <div class="container d-flex justify-content-center">
+            <div class="card col-12 col-md-6 shadow-sm">
+                <div class="card-body">
+                    <div class="mb-4 text-center">
+                        <div class="mb-3">
+                            <i class="fa fa-circle-check fa-3x text-success"></i>
+                        </div>
+                        <h5 class="card-title">Registration Successful!</h5>
+                        <p class="text-muted mb-0">
+                            Welcome to PromoQuoter! We've sent you a verification email.
+                            Please check your inbox and click the verification link to activate your account.
+                        </p>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-fw fa-info-circle"></i>
+                        <strong>Next Steps:</strong><br>
+                        1. Check your email inbox<br>
+                        2. Click the verification link<br>
+                        3. Sign in to your new account
+                    </div>
+
+                    {% if app.session.flashBag.has('verify_email_error') %}
+                        <div class="alert alert-danger" role="alert">
+                            <i class="fa fa-fw fa-exclamation-circle"></i>
+                            {{ app.flashes('verify_email_error')|first }}
+                        </div>
+                    {% endif %}
+
+                    <div class="text-center">
+                        <a href="{{ path('app_register') }}" class="btn btn-outline-secondary me-2">
+                            <i class="fa fa-fw fa-rotate"></i> Resend Verification Email
+                        </a>
+                        <a href="{{ path('app_login') }}" class="btn btn-promo">
+                            <i class="fa fa-fw fa-sign-in"></i> Sign In
+                        </a>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="my-3"/>
+
+                    <p class="text-center m-0 text-secondary">
+                        Need help? Contact our
+                        <a class="text-decoration-none" href="{{ path('app_support') }}">Support Team</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

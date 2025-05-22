@@ -70,9 +70,9 @@
                     {{ form_row(registrationForm.agreeTerms) }}
 
                     {# reCAPTCHA #}
-                    <div class="col-12 mb-3" style="display: flex; justify-content: center;">
+                    {# <div class="col-12 mb-3" style="display: flex; justify-content: center;">
                         <div class="g-recaptcha" data-sitekey="6LcR4HwpAAAAACiB5BGzciqL5RvRCWRgT6OUGYK-"></div>
-                    </div>
+                    </div> #}
 
                     {# Submit #}
                     <div class="col-12">
@@ -83,11 +83,10 @@
                     <hr class="my-3"/>
 
                     {# Login Link #}
-                    {# TODO: Add this back #}
-                    {#                        <p class="text-center m-0 text-secondary"> #}
-                    {#                            Already have an account? #}
-                    {#                            <a class="text-decoration-none" href="{{ path('app_login') }}">Login</a> #}
-                    {#                        </p> #}
+                    <p class="text-center m-0 text-secondary">
+                        Already have an account?
+                        <a class="text-decoration-none" href="{{ path('app_login') }}">Login</a>
+                    </p>
 
                     {{ form_end(registrationForm) }}
                 </div>

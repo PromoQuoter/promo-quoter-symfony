@@ -1,0 +1,56 @@
+{% extends 'layouts/home/layout.html.twig' %}
+
+{% block title %}Magic Link Sent{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
+
+{% block content %}
+    <section class="px-5 py-8">
+        <div class="container d-flex justify-content-center">
+            <div class="card col-12 col-md-6 shadow-sm">
+                <div class="card-body">
+                    <div class="mb-4 text-center">
+                    <div class="mb-3">
+                            <i class="fa fa-envelope-circle-check fa-3x text-success"></i>
+                        </div>
+                        <h5 class="card-title">Check Your Email</h5>
+                        <p class="text-muted mb-0">
+                            We've sent you a secure login link. Please check your email inbox and click the link to sign in.
+                        </p>
+                        </div>
+
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-fw fa-info-circle"></i>
+                        <strong>Didn't receive the email?</strong><br>
+                        • Check your spam folder<br>
+                        • Make sure you entered the correct email address<br>
+                        • Allow a few minutes for the email to arrive
+                        </div>
+
+                    <div class="text-center">
+                        <a href="{{ path('app_magic_link') }}" class="btn btn-outline-secondary">
+                            <i class="fa fa-fw fa-rotate"></i> Request New Link
+                        </a>
+                        </div>
+
+                        <!-- Divider -->
+                    <hr class="my-3"/>
+
+                        <p class="text-center m-0 text-secondary">
+                        Remember your password?
+                        <a class="text-decoration-none" href="{{ path('app_login') }}">Sign in</a>
+
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') == false %}
+                                &bullet;
+                                Need an account?
+                                <a class="text-decoration-none" href="{{ path('app_register') }}">Register</a>
+                            {% endif %}
+                        </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

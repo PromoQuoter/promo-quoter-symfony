@@ -38,3 +38,10 @@ services:
 #            - [ setAnnotationReader, [ '@annotation_reader' ] ]
             # The `clock` service was introduced in Symfony 6.2; if using an older Symfony version, you can either comment this call or provide your own PSR-20 Clock implementation
             - [ setClock, [ '@clock' ] ]
+
+    # Resolve Cloudflare IP
+    App\Service\CloudflareIpResolver:
+        decorates: 'karser_recaptcha3.ip_resolver'
+        arguments:
+            $decorated: '@App\Service\CloudflareIpResolver.inner'
+            $requestStack: '@request_stack'

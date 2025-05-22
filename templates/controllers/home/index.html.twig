@@ -4,21 +4,20 @@
 
 {% block content %}
     {# Banner #}
-    {# TODO: Proper button paths #}
     {% set banners = [
         {
             "image": "2.jpg",
             "title": "QUOTING SOFTWARE MADE SIMPLE.",
             "description": "Quotation & Job Tracking Application for the Promotional Products Industry.",
             "button_text": "START YOUR FREE TRIAL NOW",
-            "button_page": '/register'
+            "button_page": path('app_register')
         },
         {
             "image": "3.jpg",
             "title": "14 DAY FREE TRIAL",
             "description": "No Lock in Contracts. Cancel Anytime",
             "button_text": "START YOUR FREE TRIAL NOW",
-            "button_page": '/register'
+            "button_page": path('app_register')
         },
         {
             "image": "1.jpg",
@@ -138,8 +137,7 @@
                     the available session times on the calendar to avoid any scheduling conflicts.
                 </p>
 
-                {# TODO: Add this back #}
-{#                <a class="btn btn-promo btn-lg mt-2" href="{{ path('app_book_demo') }}">Book Now</a>#}
+                <a class="btn btn-promo btn-lg mt-2" href="{{ path('app_book_demo') }}">Book Now</a>
             </div>
             <div class="col-md-6">
                 <div class="text-center">
